@@ -53,7 +53,7 @@ function App() {
 
   const logoutUser = () => {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    window.location.href = '/';
   };
 
   const formatTime = (time) => {
