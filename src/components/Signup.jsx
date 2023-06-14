@@ -44,13 +44,14 @@ const Signup = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setLoading(false);
         setSuccessMessage('Signup successful!'); // Set success message       
       } else {
         console.log('Signup failed!');
       }
     } catch (error) {
       console.log('Error:', error);
+    } finally {
+      setLoading(false); // Set loading to false when the API request is completed
     }
   };
 
