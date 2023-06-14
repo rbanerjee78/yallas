@@ -44,14 +44,21 @@ const Signup = () => {
 
       if (response.ok) {
         const data = await response.json();
-        setSuccessMessage('Signup successful!'); // Set success message       
+        setSuccessMessage('Signup successful!'); 
+        setFormData({
+          first_name: '',
+          last_name: '',
+          email: '',
+          password: '',
+          confirm_password: '',
+        });      
       } else {
         console.log('Signup failed!');
       }
     } catch (error) {
       console.log('Error:', error);
     } finally {
-      setLoading(false); // Set loading to false when the API request is completed
+      setLoading(false); 
     }
   };
 
@@ -59,7 +66,6 @@ const Signup = () => {
   const validateFormData = (data) => {
     const errors = {};
   
-    // Check if fields are empty
     if (data.first_name.trim() === '') {
       errors.first_name = 'First name is required';
     }
@@ -76,7 +82,6 @@ const Signup = () => {
       errors.confirm_password = 'Confirm password is required';
     }
   
-    // Check if password and confirm_password match
     if (data.password !== data.confirm_password) {
       errors.confirm_password = 'Passwords do not match';
     }
