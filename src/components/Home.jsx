@@ -13,7 +13,7 @@ export default function Home() {
       ) : (
         <>
         <p>
-        "Welcome to the Text Analyzer! This tool allows you to analyze text and gain insights about its composition and characteristics. Simply enter or paste the text you want to analyze into the text input field, and click on the 'Analyze' button.
+        "Welcome to the Text Analyzer! This tool allows you to analyze text and gain insights about its composition and characteristics. Simply enter or paste the text you want to analyze into the text input field.
 </p><p>
 The Text Analyzer provides various features to help you understand the text better. It can calculate the total number of words, sentences, and paragraphs in the text. It can also determine the average word length and the most frequent words used. Additionally, it can perform sentiment analysis to assess the overall sentiment of the text.
         </p>
