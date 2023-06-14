@@ -12,6 +12,7 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -24,7 +25,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError(null);
-
+    setLoading(true);
     try {
       const response = await fetch('https://5f72af646833480016a9be8c.mockapi.io/api/users', {
         method: 'POST',
@@ -37,9 +38,10 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         const { token } = data;
-        //console.log('Login successful! Token:', token);
         localStorage.setItem('token', token)
+        setLoading(false);
         window.location.href = '/textanalyzer';
+
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Login failed!');
@@ -54,6 +56,9 @@ const Login = () => {
     <form onSubmit={handleSubmit}>
         <h5>Login</h5>
       <div className='form-group mb-3'>
+      {loading && <div className="spinner-border text-primary" role="status">
+  <span className="visually-hidden">Loading...</span>
+</div>} 
         <label>Email:</label>
         <input
           type="email"

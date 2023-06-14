@@ -5,7 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 const Signup = () => {
   
   const [successMessage, setSuccessMessage] = useState('');
-
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     first_name: '',
@@ -25,6 +26,13 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+    const validationErrors = validateFormData(formData);
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+
     try {
       const response = await fetch('https://5f72af646833480016a9be8c.mockapi.io/api/users', {
         method: 'POST',
@@ -36,6 +44,7 @@ const Signup = () => {
 
       if (response.ok) {
         const data = await response.json();
+        setLoading(false);
         setSuccessMessage('Signup successful!'); // Set success message       
       } else {
         console.log('Signup failed!');
@@ -45,11 +54,43 @@ const Signup = () => {
     }
   };
 
+
+  const validateFormData = (data) => {
+    const errors = {};
+  
+    // Check if fields are empty
+    if (data.first_name.trim() === '') {
+      errors.first_name = 'First name is required';
+    }
+    if (data.last_name.trim() === '') {
+      errors.last_name = 'Last name is required';
+    }
+    if (data.email.trim() === '') {
+      errors.email = 'Email is required';
+    }
+    if (data.password === '') {
+      errors.password = 'Password is required';
+    }
+    if (data.confirm_password === '') {
+      errors.confirm_password = 'Confirm password is required';
+    }
+  
+    // Check if password and confirm_password match
+    if (data.password !== data.confirm_password) {
+      errors.confirm_password = 'Passwords do not match';
+    }
+  
+    return errors;
+  };
+
   return (
     <>
    
     <form onSubmit={handleSubmit}>
     <h5>Sign Up</h5>
+    {loading && <div className="spinner-border text-primary" role="status">
+  <span className="visually-hidden">Loading...</span>
+</div>} 
     {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
 
     <div className=' mb-3 d-grid'>  <input
@@ -60,6 +101,8 @@ const Signup = () => {
         onChange={handleChange}
         className='form-control'
       />
+            {errors.first_name && <span className='text-danger fs-6'>{errors.first_name}</span>} {/* Display the error message */}
+
       </div>
      
       <div className=' mb-3 d-grid'> <input
@@ -70,6 +113,8 @@ const Signup = () => {
         onChange={handleChange}
         className='form-control'
       />
+            {errors.last_name && <span className='text-danger fs-6'>{errors.last_name}</span>} {/* Display the error message */}
+
     </div>
 
     <div className=' mb-3 d-grid'> 
@@ -81,6 +126,9 @@ const Signup = () => {
         onChange={handleChange}
         className='form-control'
       />
+
+{errors.email && <span className='text-danger fs-6'>{errors.email}</span>} {/* Display the error message */}
+
      </div>
      <div className=' mb-3 d-grid'> 
       <input
@@ -91,6 +139,9 @@ const Signup = () => {
         onChange={handleChange}
         className='form-control'
       />
+
+{errors.password && <span className='text-danger fs-6'>{errors.password}</span>} {/* Display the error message */}
+
      </div>
      <div className=' mb-3 d-grid'> 
       <input
@@ -101,6 +152,8 @@ const Signup = () => {
         onChange={handleChange}
         className='form-control'
       />
+ {errors.confirm_password && <span className='text-danger fs-6'>{errors.confirm_password}</span>} {/* Display the error message */}
+
      </div>
       <button type="submit" className='btn btn-primary btn-sm'>Sign Up</button>
     </form>
