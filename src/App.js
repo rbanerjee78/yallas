@@ -69,7 +69,7 @@ function App() {
         <div className='container-fluid custom-container'>
           <div className="row justify-content-center">
             <div className="col-10 col-md-8 col-lg-8 my-5">
-              <div className='card py-1 px-5 shadow'>
+              <div className='card py-3 px-5 shadow'>
                 {isLoggedIn && (
                   <p className='d-flex justify-content-end'>
                     Your session will expire in: &nbsp;

@@ -45,13 +45,15 @@ const Signup = () => {
       if (response.ok) {
         const data = await response.json();
         setSuccessMessage('Signup successful!'); 
+        setErrors({});
         setFormData({
           first_name: '',
           last_name: '',
           email: '',
           password: '',
           confirm_password: '',
-        });      
+        }); 
+        setLoading(false);      
       } else {
         console.log('Signup failed!');
       }
@@ -94,11 +96,13 @@ const Signup = () => {
    
     <form onSubmit={handleSubmit}>
     <h5>Sign Up</h5>
-    {loading && <div className="spinner-border text-primary" role="status">
-  <span className="visually-hidden">Loading...</span>
-</div>} 
+    
     {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
-
+    {loading && (
+      <div className="spinner-border text-primary" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    )} {/* Display the loading spinner only when there are no errors */}
     <div className=' mb-3 d-grid'>  <input
         type="text"
         name="first_name"
