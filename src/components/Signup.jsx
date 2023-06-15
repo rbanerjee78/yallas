@@ -28,8 +28,10 @@ const Signup = () => {
     event.preventDefault();
     setLoading(true);
     const validationErrors = validateFormData(formData);
+    
   if (Object.keys(validationErrors).length > 0) {
     setErrors(validationErrors);
+    setLoading(false);
     return;
   }
 
@@ -42,7 +44,7 @@ const Signup = () => {
         body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
+      if (response.ok) {        
         const data = await response.json();
         setSuccessMessage('Signup successful!'); 
         setErrors({});
@@ -59,9 +61,7 @@ const Signup = () => {
       }
     } catch (error) {
       console.log('Error:', error);
-    } finally {
-      setLoading(false); 
-    }
+    } 
   };
 
 
@@ -89,6 +89,7 @@ const Signup = () => {
     }
   
     return errors;
+    
   };
 
   return (
